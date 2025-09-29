@@ -30,6 +30,10 @@ export function addProject() {
         projectButton.appendChild(closeButton);
         projectsDiv.appendChild(projectButton);
 
+        closeButton.addEventListener("click", () => {
+            projectsDiv.removeChild(projectButton);
+        });
+
         form.setAttribute("style", "display: none");
         active = false;
     } else {
