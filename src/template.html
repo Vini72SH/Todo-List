@@ -14,7 +14,7 @@
             <p class="header-text"> Todo List </p>
         </header>
         <div class="sidebar">
-            <button class="btn today-button active">
+            <button class="btn today-button">
                 <img class="today-img sidebar-img" src="icons/today.svg" alt="today-icon">
                 Today
             </button>
@@ -23,9 +23,19 @@
                 This Week
             </button>
             <h1> Projects </h1>
-            <button> btn 1 </button>
-            <button> btn 2 </button>
-            <button> + Add New Project </button>
+            <div class="projects">
+            </div>
+            <button class="btn new-project" id="new-project-button">
+                <img class="sidebar-img" src="icons/plus.svg" alt="plus-icon">
+                New Project
+            </button>
+            <div>
+                <form class="form" action="#" method="#">
+                    <input type="text" id="project-name" name="project-name" required>
+                    <br>
+                    <button type="submit" id="submit" class="btn add"> ADD </button>
+                </form>
+            </div>
         </div>
     </div>
 </body>
