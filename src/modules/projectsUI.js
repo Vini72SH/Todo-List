@@ -34,6 +34,14 @@ export function addProject() {
             projectsDiv.removeChild(projectButton);
         });
 
+        projectButton.addEventListener("mouseenter", () => {
+            closeButton.setAttribute("style", "display: block");
+        })
+
+        projectButton.addEventListener("mouseleave", () => {
+            closeButton.setAttribute("style", "display: none");
+        })
+
         form.setAttribute("style", "display: none");
         active = false;
     } else {

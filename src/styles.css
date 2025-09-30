@@ -17,10 +17,6 @@ input {
     padding: 10px;
 }
 
-.active {
-    background-color: #DBDBDB;
-}
-
 .container {
     display: flex;
     flex-direction: row;
@@ -140,5 +136,11 @@ input {
 
 .close-button {
     border: 0px;
+    display: none;
     background-color: transparent;
+}
+
+.active {
+    background-color: #969696;
+    border-radius: 16px;
 }
