@@ -79,6 +79,7 @@ input {
     height: 88vh;
     background-color: #C4C4C4;
     z-index: 999;
+    border-right: 2px solid black;
 }
 
 .btn {
@@ -143,4 +144,15 @@ input {
 .active {
     background-color: #969696;
     border-radius: 16px;
+}
+
+.list-content {
+    overflow-y: scroll;
+    margin-top: 3vh;
+    margin-left: 3vw;
+    width: 95%;
+    height: 81vh;
+    border: 2px solid black;
+    border-radius: 16px;
+    background-color: #D4D4D4;
 }
