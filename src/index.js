@@ -1,5 +1,7 @@
-import "./styles.css";
-import { addProject, showButton } from "./modules/projectsUI.js";
+import "./styles/static.css";
+import "./styles/sidebar.css";
+import "./styles/taskList.css"
+import { addProject, renderProject, showButton } from "./modules/projectsUI.js";
 
 const todayButton = document.querySelector("#today-button");
 const weekButton = document.querySelector("#week-button");
@@ -27,8 +29,9 @@ weekButton.addEventListener("click", () => {
 })
 
 projectsDiv.addEventListener("click", (e) => {
-    if (e.target.classList.contains("project-button")) {
+    if (e.target.classList.contains("project-button") && !(e.target.classList.contains("active"))) {
         changeActive(e.target);
+        renderProject(e.target.textContent);
     }
 })
 
