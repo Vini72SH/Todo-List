@@ -6,37 +6,38 @@ const form = document.querySelector(".form");
 const projectsDiv = document.querySelector(".projects");
 const content = document.querySelector(".list-content");
 const addTaskDiv = document.querySelector(".add-task-form-div");
+const taskForm = document.querySelector(".add-task-form");
 
 function clearContent(content) {
     while (content.hasChildNodes()) {
         clearContent(content.firstChild);
         content.removeChild(content.firstChild);
     }
+
+    taskForm.reset();
+    addTaskDiv.setAttribute("style", "display: none");
 }
 
 function createTaskForm() {
     addTaskDiv.setAttribute("style", "display: block");
 
-    addTaskDiv.innerHTML = `
-        <form class="add-task-form" action="#" method="#">
-            <div>
-                <label for="task-title"> Task Title <br></label>
-                <input type="text" id="task-title" name="task-title" required>
-            </div>
-            <div>
-                <label for="task-date"> Date <br></label>
-                <input type="date" id="task-date" name="task-date" required>
-            </div>
-            <div>
-                <label for="task-description"> Description <br></label>
-                <textarea type="text" id="task-description" name="task-description" required></textarea>
-            </div>
-            <button type="submit" id="submit-task"> Submit </button>
-        </form>
+    taskForm.innerHTML = `
+        <div>
+            <label for="task-title"> Task Title <br></label>
+            <input type="text" id="task-title" name="task-title" required>
+        </div>
+        <div>
+            <label for="task-date"> Date <br></label>
+            <input type="date" id="task-date" name="task-date" required>
+        </div>
+        <div>
+            <label for="task-description"> Description <br></label>
+            <textarea type="text" id="task-description" name="task-description" required></textarea>
+        </div>
+        <button type="submit" id="submit-task"> Submit </button>
     `;
-    const subtmitTask = document.querySelector("#submit-task");
-    const taskForm = document.querySelector(".add-task-form");
 
+    const subtmitTask = document.querySelector("#submit-task");
     subtmitTask.addEventListener("click", () => {
         const taskTitle = document.querySelector("#task-title").value.trim();
         const taskDate = document.querySelector("#task-date").value.trim();
