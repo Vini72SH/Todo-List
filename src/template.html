@@ -41,6 +41,35 @@
         </div>
         <div class="add-task-form-div">
             <form class="add-task-form" action="#" method="#">
+                <div>
+                    <label for="task-title"> Task Title <br></label>
+                    <input type="text" id="task-title" name="task-title">
+                </div>
+                <div class="date-priority">
+                    <div>
+                        <label for="task-date"> Date <br></label>
+                        <input type="date" id="task-date" name="task-date">
+                    </div>
+                    <div class="priority-form">
+                        <div>
+                            <input type="radio" id="low" name="priority" value="low">
+                            <label for="low"> Low </label>
+                        </div>
+                        <div>
+                            <input type="radio" id="medium" name="priority" value="medium" checked>
+                            <label for="medium"> Medium </label>
+                        </div>
+                        <div>
+                            <input type="radio" id="high" name="priority" value="high">
+                            <label for="high"> High </label>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label for="task-description"> Description <br></label>
+                    <textarea type="text" id="task-description" name="task-description"></textarea>
+                </div>
+                <button type="submit" id="submit-task"> Submit </button>
             </form>
         </div>
     </div>

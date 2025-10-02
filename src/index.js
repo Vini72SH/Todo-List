@@ -1,7 +1,7 @@
 import "./styles/static.css";
 import "./styles/sidebar.css";
 import "./styles/taskList.css"
-import { addProject, renderProject, showButton } from "./modules/projectsUI.js";
+import { addProject, showButton } from "./modules/projectsUI.js";
 
 const todayButton = document.querySelector("#today-button");
 const weekButton = document.querySelector("#week-button");
@@ -12,7 +12,7 @@ const newProjectButton = document.querySelector("#new-project-button");
 
 let current = todayButton;
 
-function changeActive(button) {
+export function changeActive(button) {
     current.classList.remove("active");
     button.classList.add("active");
     current = button;
@@ -26,13 +26,6 @@ todayButton.addEventListener("click", () => {
 weekButton.addEventListener("click", () => {
     if (current !== weekButton)
         changeActive(weekButton);
-})
-
-projectsDiv.addEventListener("click", (e) => {
-    if (e.target.classList.contains("project-button") && !(e.target.classList.contains("active"))) {
-        changeActive(e.target);
-        renderProject(e.target.textContent);
-    }
 })
 
 newProjectButton.addEventListener("click", () => {

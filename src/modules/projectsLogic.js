@@ -2,12 +2,12 @@ let id = 0;
 let projects = [];
 
 class TodoItem {
-    constructor(name, desc, priority, project, date) {
-        this.name = name;
+    constructor(title, desc, date, priority, project) {
+        this.title = title;
         this.desc = desc;
+        this.date = date;
         this.priority = priority;
         this.project = project;
-        this.date = date;
     }
 }
 
@@ -17,6 +17,23 @@ class Project {
         this.name = name;
         this.todoList = [];
     }
+
+    addTask(task) {
+        this.todoList.push(task);
+    }
+}
+
+export function addTaskToAProject(title, desc, date, priority, project) {
+    let i;
+    let newTask = new TodoItem(title, desc, date, priority, project);
+
+    for (i = 0; i < projects.length; ++i) {
+        if (projects[i].name === project) {
+            projects[i].addTask(newTask);
+            return 0; // sucesso
+        }
+    }
+    return 1; // projeto não encontrado
 }
 
 export function createProject(name) {
@@ -35,12 +52,11 @@ export function createProject(name) {
 }
 
 export function deleteProject(name) {
-    let i;
-    for (i = 0; i < projects.length; ++i) {
+    for (let i = 0; i < projects.length; ++i) {
         if (projects[i].name === name) {
-            break;
+            projects.splice(i, 1);
+            return 0; // sucesso
         }
     }
-
-    projects.splice(i, 1);
+    return 1; // projeto não encontrado
 }

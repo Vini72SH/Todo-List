@@ -1,5 +1,6 @@
 import closeImg from "../icons/close.svg"
-import { createProject, deleteProject } from "./projectsLogic";
+import { addTaskToAProject, createProject, deleteProject } from "./projectsLogic";
+import { changeActive } from "../index.js";
 
 let active = false;
 const form = document.querySelector(".form");
@@ -18,37 +19,57 @@ function clearContent(content) {
     addTaskDiv.setAttribute("style", "display: none");
 }
 
-function createTaskForm() {
+function validateTaskForm(project) {
     addTaskDiv.setAttribute("style", "display: block");
 
-    taskForm.innerHTML = `
-        <div>
-            <label for="task-title"> Task Title <br></label>
-            <input type="text" id="task-title" name="task-title" required>
-        </div>
-        <div>
-            <label for="task-date"> Date <br></label>
-            <input type="date" id="task-date" name="task-date" required>
-        </div>
-        <div>
-            <label for="task-description"> Description <br></label>
-            <textarea type="text" id="task-description" name="task-description" required></textarea>
-        </div>
-        <button type="submit" id="submit-task"> Submit </button>
-    `;
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const minDate = `${year}-${month}-${day}`;
+
+    document.getElementById('task-date').setAttribute('min', minDate);
 
     const subtmitTask = document.querySelector("#submit-task");
-    subtmitTask.addEventListener("click", () => {
+    subtmitTask.onclick = () => {
         const taskTitle = document.querySelector("#task-title").value.trim();
-        const taskDate = document.querySelector("#task-date").value.trim();
         const taskDesc = document.querySelector("#task-description").value.trim();
+        const taskDate = document.querySelector("#task-date").value.trim();
+        const priorityInput = document.querySelector('input[name="priority"]:checked');
+        const taskPriority = priorityInput ? priorityInput.value : null;
 
-        if (taskTitle && taskDate && taskDesc) {
+        if (taskTitle && taskDesc && taskDate && taskPriority) {
             addTaskDiv.setAttribute("style", "display: none");
+            addTaskToAProject(taskTitle, taskDesc, taskDate, taskPriority, project);
+        } else {
+            alert("Fill in all fields");
         }
 
         taskForm.reset();
+    };
+}
+
+function renderProject(project) {
+    clearContent(content);
+
+    let projectTitle = document.createElement("h1");
+    projectTitle.textContent = project;
+
+    content.appendChild(projectTitle);
+
+    let taskList = document.createElement("div");
+    taskList.className = "task-list";
+    content.appendChild(taskList);
+
+    let addTaskButton = document.createElement("button");
+    addTaskButton.className = "btn add-task-button";
+    addTaskButton.textContent = "Add Task";
+
+    addTaskButton.addEventListener("click", () => {
+        validateTaskForm(project);
     });
+
+    content.appendChild(addTaskButton);
 }
 
 export function showButton() {
@@ -77,8 +98,9 @@ export function addProject() {
 
             closeButton.addEventListener("click", () => {
                 deleteProject(projectName);
-                projectsDiv.removeChild(projectButton);
+                clearContent(projectButton);
                 clearContent(content);
+                projectsDiv.removeChild(projectButton);
             });
 
             projectButton.addEventListener("mouseenter", () => {
@@ -87,6 +109,11 @@ export function addProject() {
 
             projectButton.addEventListener("mouseleave", () => {
                 closeButton.setAttribute("style", "display: none");
+            })
+
+            projectButton.addEventListener("click", () => {
+                changeActive(projectButton);
+                renderProject(projectName);
             })
 
             projectButton.appendChild(closeButton);
@@ -103,27 +130,4 @@ export function addProject() {
     } else {
         alert("Please enter a name for the project");
     }
-}
-
-export function renderProject(project) {
-    clearContent(content);
-
-    let projectTitle = document.createElement("h1");
-    projectTitle.textContent = project;
-
-    content.appendChild(projectTitle);
-
-    let taskList = document.createElement("div");
-    taskList.className = "task-list";
-    content.appendChild(taskList);
-
-    let addTaskButton = document.createElement("button");
-    addTaskButton.className = "btn add-task-button";
-    addTaskButton.textContent = "Add Task";
-
-    addTaskButton.addEventListener("click", () => {
-        createTaskForm();
-    });
-
-    content.appendChild(addTaskButton);
 }
