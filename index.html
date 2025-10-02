@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Todo-List </title>
+<script defer src="main.js"></script></head>
+
+<body>
+    <div class="container">
+        <header class="header-section">
+            <img class="logo" src="icons/icon.svg" alt="todo-list">
+            <p class="header-text"> Todo List </p>
+        </header>
+        <div class="sidebar">
+            <button class="btn today-button active" id="today-button">
+                <img class="today-img sidebar-img" src="icons/today.svg" alt="today-icon">
+                Today
+            </button>
+            <button class="btn week-button" id="week-button">
+                <img class="week-img sidebar-img" src="icons/week.svg" alt="week-icon">
+                This Week
+            </button>
+            <h1> Projects </h1>
+            <div class="projects">
+            </div>
+            <button class="btn new-project" id="new-project-button">
+                <img class="sidebar-img" src="icons/plus.svg" alt="plus-icon">
+                New Project
+            </button>
+            <div>
+                <form class="form" action="#" method="#">
+                    <input type="text" id="project-name" name="project-name" required>
+                    <br>
+                    <button type="submit" id="submit" class="btn add"> ADD </button>
+                </form>
+            </div>
+        </div>
+        <div class="list-content">
+        </div>
+        <div class="add-task-form-div">
+            <form class="add-task-form" action="#" method="#">
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
