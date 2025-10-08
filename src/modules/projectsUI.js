@@ -19,7 +19,15 @@ function clearContent(content) {
     addTaskDiv.setAttribute("style", "display: none");
 }
 
-function validateTaskForm(project) {
+function createTask(taskTitle, taskDesc, taskDate, taskPriority, project) {
+    let taskDiv = document.createElement("div");
+    taskDiv.textContent = taskTitle;
+    taskDiv.className = "task-div";
+
+    return taskDiv;
+}
+
+function validateTaskForm(project, taskList) {
     addTaskDiv.setAttribute("style", "display: block");
 
     const today = new Date();
@@ -41,6 +49,8 @@ function validateTaskForm(project) {
         if (taskTitle && taskDesc && taskDate && taskPriority) {
             addTaskDiv.setAttribute("style", "display: none");
             addTaskToAProject(taskTitle, taskDesc, taskDate, taskPriority, project);
+            let taskItem = createTask(taskTitle, taskDesc, taskDate, taskPriority, project);
+            taskList.appendChild(taskItem);
         } else {
             alert("Fill in all fields");
         }
@@ -66,7 +76,7 @@ function renderProject(project) {
     addTaskButton.textContent = "Add Task";
 
     addTaskButton.addEventListener("click", () => {
-        validateTaskForm(project);
+        validateTaskForm(project, taskList);
     });
 
     content.appendChild(addTaskButton);
