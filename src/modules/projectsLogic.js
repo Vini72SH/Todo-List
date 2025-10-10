@@ -30,10 +30,10 @@ export function addTaskToAProject(title, desc, date, priority, project) {
     for (i = 0; i < projects.length; ++i) {
         if (projects[i].name === project) {
             projects[i].addTask(newTask);
-            return 0; // sucesso
+            return 0;
         }
     }
-    return 1; // projeto não encontrado
+    return 1;
 }
 
 export function createProject(name) {
@@ -59,4 +59,17 @@ export function deleteProject(name) {
         }
     }
     return 1; // projeto não encontrado
+}
+
+export function getProjectTasks(project) {
+    let tasks = [];
+    for (let i = 0; i < projects.length; ++i) {
+        if (projects[i].name === project) {
+            for (let j = 0; j < projects[i].todoList.length; ++j) {
+                tasks.push(projects[i].todoList[j]);
+            }
+        }
+    }
+
+    return tasks;
 }

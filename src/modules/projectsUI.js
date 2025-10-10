@@ -1,5 +1,5 @@
 import closeImg from "../icons/close.svg"
-import { addTaskToAProject, createProject, deleteProject } from "./projectsLogic";
+import { addTaskToAProject, createProject, deleteProject, getProjectTasks } from "./projectsLogic";
 import { changeActive } from "../index.js";
 
 let active = false;
@@ -19,10 +19,73 @@ function clearContent(content) {
     addTaskDiv.setAttribute("style", "display: none");
 }
 
+function showTaskCard({ title, desc, date, priority, project }) {
+    const overlay = document.createElement("div");
+    overlay.className = "task-card-overlay";
+
+    const card = document.createElement("div");
+    card.className = "task-card";
+
+    const closeBtn = document.createElement("button");
+    closeBtn.textContent = "×";
+    closeBtn.className = "task-button";
+    closeBtn.onclick = () => document.body.removeChild(overlay);
+
+    card.innerHTML += `
+        <h2>${title}</h2>
+        <p><strong>Projeto:</strong> ${project}</p>
+        <p><strong>Descrição:</strong> ${desc}</p>
+        <p><strong>Data:</strong> ${date}</p>
+        <p><strong>Prioridade:</strong> <span style="color: ${priority === "low" ? "#8AFF8A" : priority === "medium" ? "#FFFF5C" : "#FF2E2E"
+        }">${priority}</span></p>
+    `;
+    card.appendChild(closeBtn);
+    overlay.appendChild(card);
+    document.body.appendChild(overlay);
+}
+
 function createTask(taskTitle, taskDesc, taskDate, taskPriority, project) {
-    let taskDiv = document.createElement("div");
-    taskDiv.textContent = taskTitle;
+    const taskDiv = document.createElement("div");
     taskDiv.className = "task-div";
+
+    const title = document.createElement("p");
+    title.textContent = taskTitle + " ( " + project + " )";
+    title.className = "task-title task-text";
+
+    taskDiv.appendChild(title);
+
+    const internDiv = document.createElement("div");
+    internDiv.className = "intern-div";
+
+    const dateDiv = document.createElement("p");
+    dateDiv.textContent = taskDate;
+    dateDiv.className = "task-text";
+    internDiv.appendChild(dateDiv);
+
+    const priorityDiv = document.createElement("div");
+    priorityDiv.className = "task-priority";
+
+    if (taskPriority === "low") {
+        priorityDiv.setAttribute("style", "background-color: #8AFF8A");
+    } else if (taskPriority === "medium") {
+        priorityDiv.setAttribute("style", "background-color: #FFFF5C");
+    } else {
+        priorityDiv.setAttribute("style", "background-color: #FF2E2E");
+    }
+
+    internDiv.appendChild(priorityDiv);
+
+    taskDiv.appendChild(internDiv);
+
+    taskDiv.addEventListener("click", () => {
+        showTaskCard({
+            title: taskTitle,
+            desc: taskDesc,
+            date: taskDate,
+            priority: taskPriority,
+            project: project
+        });
+    });
 
     return taskDiv;
 }
@@ -70,6 +133,13 @@ function renderProject(project) {
     let taskList = document.createElement("div");
     taskList.className = "task-list";
     content.appendChild(taskList);
+
+    let projectTasks = getProjectTasks(project);
+    for (let i = 0; i < projectTasks.length; ++i) {
+        let task = projectTasks[i];
+        let taskDiv = createTask(task.title, task.desc, task.date, task.priority, task.project);
+        taskList.appendChild(taskDiv);
+    }
 
     let addTaskButton = document.createElement("button");
     addTaskButton.className = "btn add-task-button";
