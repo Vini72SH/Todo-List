@@ -61,6 +61,32 @@ export function deleteProject(name) {
     return 1; // projeto não encontrado
 }
 
+export function getTodayTasks() {
+    let tasks = [];
+
+    const dataObj = new Date();
+    const day = String(dataObj.getDate());
+    const month = String(dataObj.getMonth() + 1);
+    const year = String(dataObj.getFullYear());
+
+    for (let i = 0; i < projects.length; ++i) {
+        for (let j = 0; j < projects[i].todoList.length; ++j) {
+            const taskDate = projects[i].todoList[j].date.split("-");
+            if (taskDate[0] === year && taskDate[1] === month && taskDate[2] === day) {
+                tasks.push(projects[i].todoList[j]);
+            }
+        }
+    }
+
+    return tasks;
+}
+
+export function getThisWeekTasks() {
+    let tasks = [];
+
+    return tasks;
+}
+
 export function getProjectTasks(project) {
     let tasks = [];
     for (let i = 0; i < projects.length; ++i) {

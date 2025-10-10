@@ -1,5 +1,5 @@
 import closeImg from "../icons/close.svg"
-import { addTaskToAProject, createProject, deleteProject, getProjectTasks } from "./projectsLogic";
+import { addTaskToAProject, createProject, deleteProject, getTodayTasks, getThisWeekTasks, getProjectTasks } from "./projectsLogic";
 import { changeActive } from "../index.js";
 
 let active = false;
@@ -210,4 +210,45 @@ export function addProject() {
     } else {
         alert("Please enter a name for the project");
     }
+}
+
+export function renderToday() {
+    clearContent(content);
+
+    let title = document.createElement("h1");
+    title.textContent = "Today";
+
+    content.appendChild(title);
+
+    let taskList = document.createElement("div");
+    taskList.className = "task-list";
+    content.appendChild(taskList);
+
+    let todayTasks = getTodayTasks();
+    for (let i = 0; i < todayTasks.length; ++i) {
+        let task = todayTasks[i];
+        let taskDiv = createTask(task.title, task.desc, task.date, task.priority, task.project);
+        taskList.appendChild(taskDiv);
+    }
+}
+
+export function renderThisWeek() {
+    clearContent(content);
+
+    let title = document.createElement("h1");
+    title.textContent = "This Week";
+
+    content.appendChild(title);
+
+    let taskList = document.createElement("div");
+    taskList.className = "task-list";
+    content.appendChild(taskList);
+
+    let thisWeekTasks = getThisWeekTasks();
+    for (let i = 0; i < thisWeekTasks.length; ++i) {
+        let task = thisWeekTasks[i];
+        let taskDiv = createTask(task.title, task.desc, task.date, task.priority, task.project);
+        taskList.appendChild(taskDiv);
+    }
+
 }

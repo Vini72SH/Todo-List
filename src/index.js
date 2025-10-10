@@ -1,12 +1,11 @@
 import "./styles/static.css";
 import "./styles/sidebar.css";
 import "./styles/taskList.css"
-import { addProject, showButton } from "./modules/projectsUI.js";
+import { addProject, showButton, renderToday, renderThisWeek } from "./modules/projectsUI.js";
 
 const todayButton = document.querySelector("#today-button");
 const weekButton = document.querySelector("#week-button");
 
-const projectsDiv = document.querySelector(".projects")
 const submitButton = document.querySelector("#submit");
 const newProjectButton = document.querySelector("#new-project-button");
 
@@ -19,13 +18,17 @@ export function changeActive(button) {
 }
 
 todayButton.addEventListener("click", () => {
-    if (current !== todayButton)
+    if (current !== todayButton) {
         changeActive(todayButton);
+        renderToday();
+    }
 })
 
 weekButton.addEventListener("click", () => {
-    if (current !== weekButton)
+    if (current !== weekButton) {
         changeActive(weekButton);
+        renderThisWeek();
+    }
 })
 
 newProjectButton.addEventListener("click", () => {
