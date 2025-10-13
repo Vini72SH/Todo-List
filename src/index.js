@@ -11,6 +11,8 @@ const newProjectButton = document.querySelector("#new-project-button");
 
 let current = todayButton;
 
+renderToday();
+
 export function changeActive(button) {
     current.classList.remove("active");
     button.classList.add("active");
