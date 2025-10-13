@@ -1,7 +1,8 @@
 import closeImg from "../icons/close.svg"
-import { addTaskToAProject, createProject, deleteProject, getTodayTasks, getThisWeekTasks, getProjectTasks } from "./projectsLogic";
+import { addTaskToAProject, createProject, deleteProject, getTodayTasks, getThisWeekTasks, getProjectTasks, removeTaskfromAProject } from "./projectsLogic";
 import { changeActive } from "../index.js";
 
+let id = 0;
 let active = false;
 const form = document.querySelector(".form");
 const projectsDiv = document.querySelector(".projects");
@@ -47,6 +48,8 @@ function showTaskCard({ title, desc, date, priority, project }) {
 function createTask(taskTitle, taskDesc, taskDate, taskPriority, project) {
     const taskDiv = document.createElement("div");
     taskDiv.className = "task-div";
+    taskDiv.id = id;
+    id++;
 
     const title = document.createElement("p");
     title.textContent = taskTitle + " ( " + project + " )";
@@ -73,8 +76,17 @@ function createTask(taskTitle, taskDesc, taskDate, taskPriority, project) {
         priorityDiv.setAttribute("style", "background-color: #FF2E2E");
     }
 
-    internDiv.appendChild(priorityDiv);
+    const closeBtn = document.createElement("button");
+    closeBtn.textContent = "×";
+    closeBtn.className = "remove-task";
+    closeBtn.onclick = (event) => {
+        event.stopPropagation();
+        document.getElementById(taskDiv.id).remove();
+        removeTaskfromAProject(taskTitle, project);
+    }
 
+    internDiv.appendChild(priorityDiv);
+    internDiv.appendChild(closeBtn);
     taskDiv.appendChild(internDiv);
 
     taskDiv.addEventListener("click", () => {

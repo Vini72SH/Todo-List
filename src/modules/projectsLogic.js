@@ -23,6 +23,23 @@ class Project {
     }
 }
 
+function isCurrentWeek(date) {
+    const now = new Date();
+    const inputDate = new Date(date);
+
+    const dayOfWeek = now.getDay();
+    const diffToSunday = -dayOfWeek;
+    const startOfWeek = new Date(now);
+    startOfWeek.setDate(now.getDate() + diffToSunday);
+    startOfWeek.setHours(0, 0, 0, 0);
+
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 6);
+    endOfWeek.setHours(23, 59, 59, 999);
+
+    return inputDate >= startOfWeek && inputDate <= endOfWeek;
+}
+
 export function addTaskToAProject(title, desc, date, priority, project) {
     let i;
     let newTask = new TodoItem(title, desc, date, priority, project);
@@ -33,6 +50,21 @@ export function addTaskToAProject(title, desc, date, priority, project) {
             return 0;
         }
     }
+    return 1;
+}
+
+export function removeTaskfromAProject(task, project) {
+    for (let i = 0; i < projects.length; ++i) {
+        if (projects[i].name === project) {
+            for (let j = 0; j < projects[i].todoList.length; ++j) {
+                if (projects[i].todoList[j].title === task) {
+                    projects[i].todoList.splice(j, 1);
+                    return 0;
+                }
+            }
+        }
+    }
+
     return 1;
 }
 
@@ -55,10 +87,10 @@ export function deleteProject(name) {
     for (let i = 0; i < projects.length; ++i) {
         if (projects[i].name === name) {
             projects.splice(i, 1);
-            return 0; // sucesso
+            return 0;
         }
     }
-    return 1; // projeto não encontrado
+    return 1;
 }
 
 export function getTodayTasks() {
@@ -83,6 +115,12 @@ export function getTodayTasks() {
 
 export function getThisWeekTasks() {
     let tasks = [];
+
+    for (let i = 0; i < projects.length; ++i) {
+        for (let j = 0; j < projects[i].todoList.length; ++j) {
+            if (isCurrentWeek(projects[i].todoList[j].date)) tasks.push(projects[i].todoList[j]);
+        }
+    }
 
     return tasks;
 }
