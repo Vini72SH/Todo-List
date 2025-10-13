@@ -29,6 +29,6 @@
   "scripts": {
     "build": "webpack",
     "dev": "webpack serve",
-    "deploy": "git subtree push --prefix dist origin todo-pages"
+    "deploy": "git subtree push --prefix dist origin todo-page"
   }
 }
